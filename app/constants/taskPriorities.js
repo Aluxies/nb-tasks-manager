@@ -1,5 +1,5 @@
 // object containing the possible task priorities
-module.exports = {
+export default {
     LOW: "low",
     MEDIUM: "medium",
     HIGH: "high"

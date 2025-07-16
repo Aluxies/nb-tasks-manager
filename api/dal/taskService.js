@@ -24,7 +24,7 @@ async function createOneTask(title, description) {
         title,
         description: description ?? "",
         priority: TASK_PRIORITIES.LOW,
-        status: TASK_STATUSES.TODO
+        status: TASK_STATUSES.NEW
     });
 
     try {
