@@ -9,16 +9,18 @@ Content-Type: application/json
 
 {
   "title": "Test",
-  "description": "Hello"
+  "description": ""
 }
 
 ### Update one task
-PUT {{baseUrl}}/tasks/68766eae48e7ece0834e9bfb
+PUT {{baseUrl}}/tasks/68781095959ea56a5f24ee11
 Content-Type: application/json
 
 {
   "title": "Passer un entretien",
-  "description": "Chez NightBorn"
+  "description": "Chez NightBorn",
+  "priority": "high",
+  "status": "done"
 }
 
 ### Delete one task
