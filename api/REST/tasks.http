@@ -1,0 +1,25 @@
+@baseUrl=http://localhost:3001/api
+
+### Get all tasks
+GET {{baseUrl}}/tasks
+
+### Add one task
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Test",
+  "description": "Hello"
+}
+
+### Update one task
+PUT {{baseUrl}}/tasks/68766eae48e7ece0834e9bfb
+Content-Type: application/json
+
+{
+  "title": "Passer un entretien",
+  "description": "Chez NightBorn"
+}
+
+### Delete one task
+DELETE {{baseUrl}}/tasks/68766ecdd10d39c6ba002f55
