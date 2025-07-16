@@ -1,4 +1,6 @@
 const mongoose= require('mongoose');
+const TASK_PRIORITIES = require('../constants/taskPriorities');
+const TASK_STATUSES = require('../constants/taskStatuses');
 
 // MongoDB connexion url
 const DB_URL = process.env.DB_URL;
@@ -20,12 +22,12 @@ const taskSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['todo', 'in progress', 'done'],
+        enum: [TASK_STATUSES.TODO, TASK_STATUSES.IN_PROGRESS, TASK_STATUSES.DONE],
         required: true
     },
     priority: {
         type: String,
-        enum: ['low', 'medium', 'high'],
+        enum: [TASK_PRIORITIES.LOW, TASK_PRIORITIES.MEDIUM, TASK_PRIORITIES.HIGH],
         required: true
     }
 });
