@@ -10,8 +10,24 @@ mongoose.connect(DB_URL)
 
 // Creating a schema to represent a task
 const taskSchema = new mongoose.Schema({
-    title: String,
-    description: String
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: false
+    },
+    status: {
+        type: String,
+        enum: ['new', 'todo', 'in progress', 'done'],
+        required: true
+    },
+    priority: {
+        type: String,
+        enum: ['low', 'medium', 'high'],
+        required: true
+    }
 });
 
 // Delete __v and transform _id to id in JSON
