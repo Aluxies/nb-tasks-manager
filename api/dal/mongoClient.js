@@ -32,6 +32,19 @@ const taskSchema = new mongoose.Schema({
     }
 });
 
+// Creating a schema to represent a user
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    }
+});
+
 // Delete __v and transform _id to id in JSON
 taskSchema.set('toJSON', {
     transform: (doc, ret) => {
@@ -45,9 +58,24 @@ taskSchema.set('toJSON', {
     }
 });
 
+// Delete __v and transform _id to id in JSON
+userSchema.set('toJSON', {
+    transform: (doc, ret) => {
+        delete ret.__v;
+        const id = ret._id;
+        delete ret._id;
+        return {
+            ...ret,
+            id
+        }
+    }
+});
+
 // Linking the schema to a model
 const Task = mongoose.model('Task', taskSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = {
-    Task
+    Task,
+    User
 };
