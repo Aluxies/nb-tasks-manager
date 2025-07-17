@@ -1,0 +1,25 @@
+@baseUrl=http://localhost:3001/api
+
+### Get all users
+GET {{baseUrl}}/users
+
+### Add one user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Test",
+  "email": "aluxies@gmail.com"
+}
+
+### Update one user
+PUT {{baseUrl}}/users/6878fcba0fa53accb81d5ea8
+Content-Type: application/json
+
+{
+  "name": "Test",
+  "email": "aluxies@hotmail.com"
+}
+
+### Delete one user
+DELETE {{baseUrl}}/users/6878fcba0fa53accb81d5ea8
