@@ -1,6 +1,15 @@
 // object containing the possible task priorities
-export default {
-    LOW: "low",
-    MEDIUM: "medium",
-    HIGH: "high"
-};
+export default [
+    {
+        label: "Low",
+        value: "low"
+    },
+    {
+        label: "Medium",
+        value: "medium"
+    },
+    {
+        label: "High",
+        value: "high"
+    }
+];
