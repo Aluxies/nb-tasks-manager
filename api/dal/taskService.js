@@ -18,12 +18,12 @@ function validationErrorHandler(err) {
 }
 
 // Allows to create a task in the database
-async function createOneTask(title, description) {
+async function createOneTask(title, description, priority) {
 
     const newTask = new Task({
         title,
         description: description ?? "",
-        priority: TASK_PRIORITIES.LOW,
+        priority: priority ?? TASK_PRIORITIES.LOW,
         status: TASK_STATUSES.NEW
     });
 
