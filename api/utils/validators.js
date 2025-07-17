@@ -1,3 +1,4 @@
+const isEmail = require('validator/lib/isEmail');
 const TASK_PRIORITIES = require("../constants/taskPriorities");
 const TASK_STATUSES = require("../constants/taskStatuses");
 const priorities = Object.values(TASK_PRIORITIES);
@@ -11,7 +12,12 @@ function isTaskStatusValueValid(taskStatus) {
     return statuses.includes(taskStatus);
 }
 
+function isEmailValid(userEmail) {
+    return isEmail(userEmail);
+}
+
 module.exports = {
     isTaskPriorityValueValid,
-    isTaskStatusValueValid
+    isTaskStatusValueValid,
+    isEmailValid
 }
