@@ -3,13 +3,14 @@ const {createOneTask, readAllTasks, updateOneTask, deleteOneTask} = require('../
 const TASK_PRIORITIES = require('../constants/taskPriorities');
 const TASK_STATUSES = require('../constants/taskStatuses');
 const {buildBusinessResponse} = require("../utils/businessResponseBuilder");
+const {isTaskPriorityValueValid, isTaskStatusValueValid} = require("../utils/validators");
 
 async function getTasks() {
     const tasks = await readAllTasks();
     return buildBusinessResponse(tasks, 200, "Ok");
 }
 
-async function addTask(title, description) {
+async function addTask(title, description, priority) {
     if (typeof title !== "string") {
         return buildBusinessResponse(null, 401, "'title' is not of 'string' type", true);
     }
@@ -18,7 +19,20 @@ async function addTask(title, description) {
         return buildBusinessResponse(null, 401, "'description' is not of 'string' type", true);
     }
 
-    const createdTask = await createOneTask(title, description);
+    if (priority !== undefined) {
+
+        if (typeof priority !== "string") {
+            return buildBusinessResponse(null, 401, "'priority' is not of 'string' type", true);
+        }
+
+        const priorities = Object.values(TASK_PRIORITIES);
+
+        if (!isTaskPriorityValueValid(priority)) {
+            return buildBusinessResponse(null, 401, `'priority' value is not valid !\n\nExpected values : ${priorities.join(', ')}`, true);
+        }
+    }
+
+    const createdTask = await createOneTask(title, description, priority);
     if (!createdTask) {
         return buildBusinessResponse(null, 401, "An error occured while creating the task", true);
     }
@@ -42,7 +56,7 @@ async function editTask(taskId, dataToUpdate) {
 
         const priorities = Object.values(TASK_PRIORITIES);
 
-        if (!priorities.includes(dataToUpdate.priority)) {
+        if (!isTaskPriorityValueValid(dataToUpdate.priority)) {
             return buildBusinessResponse(null, 401, `'priority' value is not valid !\n\nExpected values : ${priorities.join(', ')}`, true);
         }
     }
@@ -54,7 +68,7 @@ async function editTask(taskId, dataToUpdate) {
 
         const statuses = Object.values(TASK_STATUSES);
 
-        if (!statuses.includes(dataToUpdate.status)) {
+        if (!isTaskStatusValueValid(dataToUpdate.status)) {
             return buildBusinessResponse(null, 401, `'status' value is not valid !\n\nExpected values : ${statuses.join(', ')}`, true);
         }
     }

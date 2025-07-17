@@ -11,13 +11,13 @@ router.get('/', async (req, res, next) => {
 
 /* POST add a new task */
 router.post('/', async (req, res, next) => {
-    const {title, description} = req.body;
+    const {title, description, priority} = req.body;
 
     if (!title) {
         return res.status(401).send("Missing 'title' in json body");
     }
 
-    const businessResponse = await addTask(title, description);
+    const businessResponse = await addTask(title, description, priority);
 
     if (businessResponse.hasError) {
         return res.status(businessResponse.status).send(businessResponse.message);
@@ -36,7 +36,7 @@ router.put('/:id', async (req, res, next) => {
   }
 
   if (!title && !description && !priority && !status) {
-    return res.status(401).send("At least one field must be provided. Missing 'title' or 'description' in json body");
+    return res.status(401).send("At least one field must be provided. Missing 'title' or 'description' or 'priority' or 'status' in json body");
   }
 
   const dataToUpdate = {
