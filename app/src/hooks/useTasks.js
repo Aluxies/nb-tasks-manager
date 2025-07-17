@@ -27,6 +27,24 @@ export const useCreateTask = () => {
     });
 }
 
+export const useUpdateTask = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (taskData) =>
+            fetch(`${baseUrl}/api/tasks/${taskData.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(taskData)
+            }).then(res => res.json()),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tasks']});
+        },
+    });
+}
+
 export const useDeleteTask = () => {
     const queryClient = useQueryClient();
     return useMutation({
