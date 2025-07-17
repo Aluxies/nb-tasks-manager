@@ -12,29 +12,29 @@ async function getTasks() {
 
 async function addTask(title, description, priority) {
     if (typeof title !== "string") {
-        return buildBusinessResponse(null, 401, "'title' is not of 'string' type", true);
+        return buildBusinessResponse(null, 403, "'title' is not of 'string' type", true);
     }
 
     if (description !== undefined && description !== null && typeof description !== "string") {
-        return buildBusinessResponse(null, 401, "'description' is not of 'string' type", true);
+        return buildBusinessResponse(null, 403, "'description' is not of 'string' type", true);
     }
 
     if (priority !== undefined) {
 
         if (typeof priority !== "string") {
-            return buildBusinessResponse(null, 401, "'priority' is not of 'string' type", true);
+            return buildBusinessResponse(null, 403, "'priority' is not of 'string' type", true);
         }
 
         const priorities = Object.values(TASK_PRIORITIES);
 
         if (!isTaskPriorityValueValid(priority)) {
-            return buildBusinessResponse(null, 401, `'priority' value is not valid !\n\nExpected values : ${priorities.join(', ')}`, true);
+            return buildBusinessResponse(null, 403, `'priority' value is not valid !\n\nExpected values : ${priorities.join(', ')}`, true);
         }
     }
 
     const createdTask = await createOneTask(title, description, priority);
     if (!createdTask) {
-        return buildBusinessResponse(null, 401, "An error occured while creating the task", true);
+        return buildBusinessResponse(null, 403, "An error occured while creating the task", true);
     }
     return buildBusinessResponse(createdTask, 201, "Ok");
 }
@@ -42,34 +42,34 @@ async function addTask(title, description, priority) {
 async function editTask(taskId, dataToUpdate) {
 
     if (dataToUpdate.title !== undefined && typeof dataToUpdate.title !== "string") {
-        return buildBusinessResponse(null, 401, "'title' is not of 'string' type", true);
+        return buildBusinessResponse(null, 403, "'title' is not of 'string' type", true);
     }
 
     if (dataToUpdate.description !== undefined && typeof dataToUpdate.description !== "string") {
-        return buildBusinessResponse(null, 401, "'description' is not of 'string' type", true);
+        return buildBusinessResponse(null, 403, "'description' is not of 'string' type", true);
     }
 
     if (dataToUpdate.priority !== undefined) {
         if (typeof dataToUpdate.priority !== "string") {
-            return buildBusinessResponse(null, 401, "'priority' is not of 'string' type", true);
+            return buildBusinessResponse(null, 403, "'priority' is not of 'string' type", true);
         }
 
         const priorities = Object.values(TASK_PRIORITIES);
 
         if (!isTaskPriorityValueValid(dataToUpdate.priority)) {
-            return buildBusinessResponse(null, 401, `'priority' value is not valid !\n\nExpected values : ${priorities.join(', ')}`, true);
+            return buildBusinessResponse(null, 403, `'priority' value is not valid !\n\nExpected values : ${priorities.join(', ')}`, true);
         }
     }
 
     if (dataToUpdate.status !== undefined) {
         if (typeof dataToUpdate.status !== "string") {
-            return buildBusinessResponse(null, 401, "'status' is not of 'string' type", true);
+            return buildBusinessResponse(null, 403, "'status' is not of 'string' type", true);
         }
 
         const statuses = Object.values(TASK_STATUSES);
 
         if (!isTaskStatusValueValid(dataToUpdate.status)) {
-            return buildBusinessResponse(null, 401, `'status' value is not valid !\n\nExpected values : ${statuses.join(', ')}`, true);
+            return buildBusinessResponse(null, 403, `'status' value is not valid !\n\nExpected values : ${statuses.join(', ')}`, true);
         }
     }
 
