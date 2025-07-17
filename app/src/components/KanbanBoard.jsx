@@ -1,35 +1,51 @@
-import {useDeleteTask, useTasks} from "../hooks/useTasks.js";
+import {useTasks} from "../hooks/useTasks.js";
+import TASK_STATUSES from "../../constants/taskStatuses.js";
+import HeaderCell from "./HeaderCell.jsx";
+import TaskCell from "./TaskCell.jsx";
+import TaskFormCell from "./TaskFormCell.jsx";
+
+const PRIORITY_ORDER = {
+    high: 0,
+    medium: 1,
+    low: 2,
+};
 
 function KanbanBoard() {
     const {data: tasks, isLoading, error} = useTasks();
-    const deleteTaskMutation = useDeleteTask();
 
     if (isLoading) return <p>Chargement</p>;
     if (error) return <p>Erreur : {error.message}</p>;
 
-    function onTaskDelete(id) {
-        deleteTaskMutation.mutate(id);
-    }
-
     return (
-        <div className="w-1/3 flex-col">
-            <h1 className="text-2xl text-center mb-6">Task list</h1>
-            <div className="border-2 text-center border-gray-600 rounded-xl p-6">
-                <div className="flex text-gray-900 pb-2 px-4 mb-6 border-b border-gray-400">
-                    <p className="text-xl flex-3">Title</p>
-                    <p className="text-xl flex-3">Description</p>
-                    <p className="text-xl flex-1">Action</p>
+        <div className="w-11/12 h-screen flex-col">
+            <h1 className="text-4xl text-gray-600 font-bold my-8 text-center">Kanban board</h1>
+            <div className="flex-col w-full h-3/4 border rounded-md border-gray-200 mb-12">
+                <div className="flex h-1/12">
+                    {TASK_STATUSES.map((statusEntry, i) => (
+                        <div
+                            key={"header-col-"+i}
+                            className={`min-w-1/4 flex-col flex-1 ${i !== TASK_STATUSES.length - 1 && "border-r border-gray-200"}`}>
+                            <HeaderCell name={statusEntry.label}/>
+                        </div>
+                    ))}
                 </div>
-                {tasks.map(task => (
-                    <div className="flex text-gray-800 text-center border border py-2 px-4 my-2 border-gray-300 rounded-2xl hover:bg-gray-100 hover:border-white hover:text-gray-500" key={task.id}>
-                        <p className="flex-3">{task.title}</p>
-                        <p className="flex-3">{task.description}</p>
-                        <button
-                            onClick={() => onTaskDelete(task.id)}
-                                className="flex-1 text-sm border h-6 rounded-md border-gray-600 hover:cursor-pointer hover:bg-gray-600 hover:text-white">Delete
-                        </button>
-                    </div>
-                ))}
+
+                <div className="flex h-11/12">
+                    {TASK_STATUSES.map((statusEntry, i) => (
+                        <div
+                            className={`min-w-1/4 flex-col py-3 flex-1 ${i !== TASK_STATUSES.length - 1 && "border-r border-gray-200"}`} key={"cell-coll-"+i}>
+                            {tasks
+                                .filter(task => task.status === statusEntry.value)
+                                .sort((a, b) => PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority])
+                                .map(task => (
+                                    <TaskCell task={task} key={"task-"+task.id}/>
+                                ))}
+                            {statusEntry.value === "new" && (
+                                <TaskFormCell/>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
 
