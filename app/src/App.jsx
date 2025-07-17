@@ -7,7 +7,7 @@ const queryClient = new QueryClient();
 function App() {
     return (
       <QueryClientProvider client={queryClient}>
-          <div className="App flex flex-col w-screen h-screen justify-center items-center">
+          <div className="App flex flex-col w-full h-full justify-center items-center">
               <KanbanBoard/>
               <TaskForm/>
           </div>

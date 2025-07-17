@@ -25,7 +25,7 @@ function TaskForm() {
     }
 
     return (
-        <div className="w-1/3 flex-col mt-12">
+        <div className="w-3/4 flex-col mt-12">
             <h1 className="text-2xl text-center mb-6">Add a task</h1>
             <form className="Form flex justify-evenly items-center p-6 border-2 rounded-md border-gray-500" onSubmit={onAddTask}>
                 <div className="flex-col">
